@@ -1,0 +1,16 @@
+{
+  "name": "first-node-project",
+  "version": "1.0.0",
+  "main": "client.js",
+  "scripts": {
+    "start": "nodemon src/server.js",
+    "client": "node src/client.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}

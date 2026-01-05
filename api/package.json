@@ -1,0 +1,21 @@
+{
+    "name": "api",
+    "version": "1.0.0",
+    "main": "src/app.js",
+    "scripts": {
+        "prod": "NODE_ENV=production node src/app.js",
+        "start": "nodemon src/app.js"
+    },
+    "type": "module",
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "dependencies": {
+        "better-sqlite3": "^12.5.0",
+        "express": "^5.2.1"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.11"
+    }
+}
