@@ -8,17 +8,13 @@ const db = new Database('favorites.db');
 const app = express();
 const port = 3000;
 app.use(express.json());
-//app.use(cors());
-
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Accept');
-    res.setHeader(
-        'Access-Control-Allow-Methods',
-        'GET, POST, PUT, PATCH, DELETE'
-    );
-    next();
-});
+app.use(
+    cors({
+        origin: ['http://localhost:3001', 'http://localhost:3002'],
+        methods: ['GET', 'POST', 'PUT', 'PATCH'],
+        allowedHeader: ['Content-Type, Accept'],
+    })
+);
 
 app.use('/favorites', favorites);
 

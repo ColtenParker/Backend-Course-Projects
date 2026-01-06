@@ -8,7 +8,7 @@ const App = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('http://localhost:3000/favorites/');
+                const response = await fetch('http://localhost:3000/favorites');
                 const data = await response.json();
                 setData(data);
             } catch (err) {
