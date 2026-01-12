@@ -1,10 +1,11 @@
 {
     "name": "api",
     "version": "1.0.0",
-    "main": "src/app.js",
+    "main": "dist/app.js",
     "scripts": {
-        "prod": "NODE_ENV=production node src/app.js",
-        "start": "nodemon src/app.js"
+        "build": "tsc",
+        "start": "node dist/app.js",
+        "dev": "nodemon --ext ts,js,json --exec node --no-warnings --loader ts-node/esm src/app.ts"
     },
     "type": "module",
     "keywords": [],
@@ -17,6 +18,12 @@
         "express": "^5.2.1"
     },
     "devDependencies": {
-        "nodemon": "^3.1.11"
+        "@types/better-sqlite3": "^7.6.13",
+        "@types/cors": "^2.8.19",
+        "@types/express": "^5.0.6",
+        "@types/node": "^25.0.6",
+        "nodemon": "^3.1.11",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.9.3"
     }
 }
