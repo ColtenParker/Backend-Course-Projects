@@ -1,14 +1,15 @@
 import express, { Request, Response, NextFunction } from 'express';
 import Database from 'better-sqlite3';
+import { Favorite } from 'coltenparker-shared-types';
 const db = new Database('favorites.db');
 
 const router = express.Router();
 
-interface Favorite {
-    name: string;
-    url: string;
-    id: number;
-}
+// interface Favorite {
+//     name: string;
+//     url: string;
+//     id: number;
+// }
 
 router.get(
     '/',
