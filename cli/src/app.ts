@@ -3,6 +3,7 @@ import open, { openApp, apps } from 'open';
 import dotenv from 'dotenv';
 import fs from 'fs';
 import * as SDK from './lib/sdk.js';
+import { Favorite } from './types.js';
 
 SDK.setBaseUrl('http://localhost:3000');
 
@@ -12,12 +13,6 @@ const args = process.argv.slice(2);
 const command = args[0];
 const favorite = args[1];
 const url = args[2];
-
-interface Favorite {
-    name: string;
-    url: string;
-    id: number;
-}
 
 const favorites: Favorite[] = await SDK.getFavorites();
 
@@ -105,7 +100,6 @@ interface Command {
 interface Commands {
     [key: string]: Command;
 }
-
 const commands = {
     ls: { f: ls, argCount: 1 },
     open: { f: openFavorite, argCount: 2 },

@@ -63,7 +63,7 @@ router.put('/:id', (req, res) => {
     const favorite = db
         .prepare('SELECT * FROM favorites WHERE id = ?')
         .get(id);
-    res.sendStatus(200).send({ favorite });
+    return res.sendStatus(200).json({ favorite });
 });
 router.patch('/:id', (req, res) => {
     const id = parseInt(req.params.id);
@@ -83,6 +83,6 @@ router.patch('/:id', (req, res) => {
     if (!result.changes) {
         return res.status(404).json({ error: 'Favorite not found' });
     }
-    res.sendStatus(200);
+    return res.sendStatus(200);
 });
 export default router;

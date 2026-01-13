@@ -116,7 +116,7 @@ router.put(
             .prepare('SELECT * FROM favorites WHERE id = ?')
             .get(id) as Favorite;
 
-        res.sendStatus(200).send({ favorite });
+        return res.status(200).json({ favorite });
     }
 );
 
@@ -150,7 +150,7 @@ router.patch(
         if (!result.changes) {
             return res.status(404).json({ error: 'Favorite not found' });
         }
-        res.sendStatus(200);
+        return res.sendStatus(200);
     }
 );
 

@@ -11,7 +11,7 @@
         "build": "tsc",
         "start": "node dist/src/app.js",
         "dev": "tsc && node dist/src/app.js",
-        "test": "tsc && node/tests/sdk.js"
+        "test": "tsc && node dist/tests/sdk.js"
     },
     "keywords": [],
     "author": "",

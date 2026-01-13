@@ -6,7 +6,10 @@ import {
     getFavorite,
     getFavorites,
     replaceFavorite,
+    setBaseUrl,
 } from '../src/lib/sdk.js';
+
+setBaseUrl('http://localhost:3000');
 
 const newFavId = await addFavorite('example', 'example');
 console.log(newFavId);
@@ -15,10 +18,12 @@ let result = await getFavorite(newFavId);
 console.log(result);
 
 result.name = 'test-new';
-await replaceFavorite(result.id, result);
+
+const updatedFav = await replaceFavorite(result.id, result);
+console.log('updatedFav:', updatedFav);
 
 const fav = await getFavorite(result.id);
-console.log('updated:', fav);
+console.log('updated (GET):', fav);
 
 await deleteFavorite(newFavId);
 

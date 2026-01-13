@@ -33,5 +33,6 @@ export const replaceFavorite = async (id, newFav) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newFav),
     });
-    return response.status;
+    const json = await response.json();
+    return json.favorite;
 };

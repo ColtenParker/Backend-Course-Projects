@@ -8,15 +8,11 @@ const args = process.argv.slice(2);
 const command = args[0];
 const favorite = args[1];
 const url = args[2];
-const argCount = args.length;
 const favorites = await SDK.getFavorites();
 function checkBrowser() {
     const browser = process.env?.BROWSER?.toLocaleLowerCase();
     let appName = browser;
     switch (browser) {
-        case 'opera':
-            appName = apps.operagx;
-            break;
         case 'chrome':
             appName = apps.chrome;
             break;
@@ -74,6 +70,7 @@ const ls = async () => {
         console.log(`${favorite.name}: ${favorite.url}`);
     });
 };
+const argCount = args.length;
 const commands = {
     ls: { f: ls, argCount: 1 },
     open: { f: openFavorite, argCount: 2 },

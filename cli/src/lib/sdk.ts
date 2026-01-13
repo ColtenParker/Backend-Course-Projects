@@ -1,22 +1,27 @@
-let baseUrl;
+import { Favorite } from '../types.js';
 
-export const setBaseUrl = (url) => {
+let baseUrl: string;
+
+export const setBaseUrl = (url: string) => {
     baseUrl = url;
 };
 
-export const getFavorites = async () => {
+export const getFavorites = async (): Promise<Favorite[]> => {
     const response = await fetch(`${baseUrl}/favorites`);
     const json = await response.json();
     return json.favorites;
 };
 
-export const getFavorite = async (id) => {
+export const getFavorite = async (id: number): Promise<Favorite> => {
     const response = await fetch(`${baseUrl}/favorites/${id}`);
     const json = await response.json();
     return json.favorite;
 };
 
-export const addFavorite = async (name, url) => {
+export const addFavorite = async (
+    name: string,
+    url: string
+): Promise<number> => {
     const response = await fetch(`${baseUrl}/favorites`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -27,7 +32,7 @@ export const addFavorite = async (name, url) => {
     return json.id;
 };
 
-export const deleteFavorite = async (id) => {
+export const deleteFavorite = async (id: number): Promise<number> => {
     const response = await fetch(`${baseUrl}/favorites/${id}`, {
         method: 'DELETE',
     });
@@ -35,12 +40,16 @@ export const deleteFavorite = async (id) => {
     return response.status;
 };
 
-export const replaceFavorite = async (id, newFav) => {
+export const replaceFavorite = async (
+    id: number,
+    newFav: Favorite
+): Promise<Favorite> => {
     const response = await fetch(`${baseUrl}/favorites/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newFav),
     });
 
-    return response.status;
+    const json = await response.json();
+    return json.favorite;
 };
