@@ -15,16 +15,16 @@ router.get('/', (req, res) => {
     res.json({ favorites });
 });
 router.post('/', (req, res) => {
-    const { name, url } = req.body;
-    if (!name) {
+    const newFavorite = req.body;
+    if (!newFavorite.name) {
         return res.status(400).json({ error: 'Name required' });
     }
-    if (!url) {
+    if (!newFavorite.url) {
         return res.status(400).json({ error: 'Url required' });
     }
     const result = db
         .prepare('INSERT INTO favorites (name, url) values (?, ?)')
-        .run(name, url);
+        .run(newFavorite.name, newFavorite.url);
     res.status(201).json({ id: result.lastInsertRowid });
 });
 router.get('/:id', (req, res) => {
@@ -47,20 +47,23 @@ router.delete('/:id', (req, res) => {
 });
 router.put('/:id', (req, res) => {
     const id = parseInt(req.params.id);
-    const { name, url } = req.body;
-    if (!name) {
+    const newFavorite = req.body;
+    if (!newFavorite.name) {
         return res.status(400).json({ error: 'Name required' });
     }
-    if (!url) {
+    if (!newFavorite.url) {
         return res.status(400).json({ error: 'URL required' });
     }
     const result = db
         .prepare('UPDATE favorites SET name=?, url=? WHERE id = ?')
-        .run(name, url, id);
+        .run(newFavorite.name, newFavorite.url, id);
     if (!result.changes) {
         return res.status(404).json({ error: 'Favorite not found' });
     }
-    return res.sendStatus(200);
+    const favorite = db
+        .prepare('SELECT * FROM favorites WHERE id = ?')
+        .get(id);
+    res.sendStatus(200).send({ favorite });
 });
 router.patch('/:id', (req, res) => {
     const id = parseInt(req.params.id);
@@ -68,7 +71,9 @@ router.patch('/:id', (req, res) => {
     if (!name && !url) {
         return res.status(400).json({ error: 'Name or URL required' });
     }
-    const favorite = db.prepare('SELECT * FROM favorites WHERE id = ?').get(id);
+    const favorite = db
+        .prepare('SELECT * FROM favorites WHERE id = ?')
+        .get(id);
     if (!favorite) {
         return res.status(404).json({ error: 'Favorite not found' });
     }

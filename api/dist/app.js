@@ -12,6 +12,9 @@ app.use(cors({
     allowedHeaders: ['Content-Type, Accept'],
 }));
 app.use('/favorites', favorites);
+app.get('/', (req, res) => {
+    res.json({ hello: 'world' });
+});
 app.use((err, req, res, next) => {
     if (err.name === 'sqliteError') {
         console.log('Db error hit!');
