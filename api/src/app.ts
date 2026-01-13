@@ -1,6 +1,6 @@
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import Database from 'better-sqlite3';
-import favorites from './routes/favorites.js'
+import favorites from './routes/favorites.js';
 import cors from 'cors';
 
 const db = new Database('favorites.db');
@@ -18,7 +18,11 @@ app.use(
 
 app.use('/favorites', favorites);
 
-app.use((err, req, res, next) => {
+app.get('/', (req: Request, res: Response): void => {
+    res.json({ hello: 'world' });
+});
+
+app.use((err: any, req: Request, res: Response, next: NextFunction): void => {
     if (err.name === 'sqliteError') {
         console.log('Db error hit!');
     }

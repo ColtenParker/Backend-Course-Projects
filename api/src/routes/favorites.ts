@@ -4,6 +4,12 @@ const db = new Database('favorites.db');
 
 const router = express.Router();
 
+interface Favorite {
+    name: string;
+    url: string;
+    id: number;
+}
+
 router.get('/', (req, res) => {
     let query = 'SELECT * FROM favorites';
     const sort = req.query.sort;
@@ -14,24 +20,24 @@ router.get('/', (req, res) => {
         query += ' ORDER BY name DESC';
     }
 
-    const favorites = db.prepare(query).all();
+    const favorites = db.prepare(query).all() as Favorite[];
 
     res.json({ favorites });
 });
 
 router.post('/', (req, res) => {
-    const { name, url } = req.body;
+    const newFavorite: Favorite = req.body;
 
-    if (!name) {
+    if (!newFavorite.name) {
         return res.status(400).json({ error: 'Name required' });
     }
-    if (!url) {
+    if (!newFavorite.url) {
         return res.status(400).json({ error: 'Url required' });
     }
 
     const result = db
         .prepare('INSERT INTO favorites (name, url) values (?, ?)')
-        .run(name, url);
+        .run(newFavorite.name, newFavorite.url);
     res.status(201).json({ id: result.lastInsertRowid });
 });
 
@@ -39,7 +45,7 @@ router.get('/:id', (req, res) => {
     const id = parseInt(req.params.id);
     const favorite = db
         .prepare(' SELECT * FROM favorites WHERE id = ?')
-        .get(id);
+        .get(id) as Favorite;
 
     if (!favorite) {
         return res.status(404).json({ error: 'Favorite not found' });
@@ -106,4 +112,4 @@ router.patch('/:id', (req, res) => {
     res.sendStatus(200);
 });
 
-export default router
+export default router;
